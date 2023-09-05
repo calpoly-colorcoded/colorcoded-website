@@ -31,7 +31,7 @@
 					target="_blank"
 					rel="noreferrer"
 				>
-					Twitter
+					Instagram
 				</a>
 				<a
 					class="btn btn-sm variant-ghost-surface"
