@@ -1,24 +1,40 @@
-<script lang='ts'>
-	// The ordering of these imports is critical to your app working properly
-	import '@skeletonlabs/skeleton/themes/theme-skeleton.css';
-	// If you have source.organizeImports set to true in VSCode, then it will auto change this ordering
-	import '@skeletonlabs/skeleton/styles/skeleton.css';
-	// Most of your app wide CSS should be put in this file
+<script lang="ts">
 	import '../app.postcss';
 	import { AppShell, AppBar } from '@skeletonlabs/skeleton';
 
-	import Navigation from '$lib/Navigation/Navigation.svelte';
+	// Highlight JS
+	import hljs from 'highlight.js/lib/core';
+	import 'highlight.js/styles/github-dark.css';
+	import { storeHighlightJs } from '@skeletonlabs/skeleton';
+	import xml from 'highlight.js/lib/languages/xml'; // for HTML
+	import css from 'highlight.js/lib/languages/css';
+	import javascript from 'highlight.js/lib/languages/javascript';
+	import typescript from 'highlight.js/lib/languages/typescript';
+
+	hljs.registerLanguage('xml', xml); // for HTML
+	hljs.registerLanguage('css', css);
+	hljs.registerLanguage('javascript', javascript);
+	hljs.registerLanguage('typescript', typescript);
+	storeHighlightJs.set(hljs);
+
+	// Floating UI for Popups
+	import { computePosition, autoUpdate, flip, shift, offset, arrow } from '@floating-ui/dom';
+	import { storePopup } from '@skeletonlabs/skeleton';
+	storePopup.set({ computePosition, autoUpdate, flip, shift, offset, arrow });
+
+	// LightSwitch
+	import { LightSwitch } from '@skeletonlabs/skeleton';
+
+
 </script>
 
 <!-- App Shell -->
-<AppShell slotSidebarLeft="bg-surface-500/5 w-56 p-4">
-
-	<!-- Header Slot -->
+<AppShell>
 	<svelte:fragment slot="header">
 		<!-- App Bar -->
 		<AppBar>
 			<svelte:fragment slot="lead">
-				<strong class="text-xl uppercase">Skeleton</strong>
+				<strong class="text-xl">ColorCoded</strong>
 			</svelte:fragment>
 			<svelte:fragment slot="trail">
 				<a
@@ -35,7 +51,7 @@
 					target="_blank"
 					rel="noreferrer"
 				>
-					Instagram
+					Donate
 				</a>
 				<a
 					class="btn btn-sm variant-ghost-surface"
@@ -48,17 +64,11 @@
 			</svelte:fragment>
 		</AppBar>
 	</svelte:fragment>
-
-
-	<!-- Left Sidebar Slot -->
-	<svelte:fragment slot="sidebarLeft">
-		<!-- <p>Sidebar Working!</p> -->
-
-		<Navigation />
-	
-	</svelte:fragment>
-
-
 	<!-- Page Route Content -->
 	<slot />
+	<svelte:fragment slot="pageFooter">
+		<AppBar>
+			<LightSwitch/>
+		</AppBar>
+	</svelte:fragment>
 </AppShell>
